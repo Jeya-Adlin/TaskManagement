@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TaskItem>
+<a class="btn btn-primary mb-3" asp-action="Create">Create New Task</a>
+<h2>Tasks</h2>
+<form method="get" asp-action="Index">
+    <input type="text" name="searchString" placeholder="Search by name" />
+    <select name="priorityFilter">
+        <option value="">All Priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+    </select>
+    <select name="statusFilter">
+        <option value="">All Statuses</option>
+        <option value="ToDo">To Do</option>
+        <option value="InProgress">In Progress</option>
+        <option value="Completed">Completed</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TaskName</td>
+                <td>@item.Description</td>
+                <td>@item.DueDate.ToShortDateString()</td>
+                <td>@item.Priority</td>
+                <td>@item.Status</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = item.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
